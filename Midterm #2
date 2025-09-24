@@ -1,0 +1,81 @@
+// Midterm Activity 2: Co-op Management System
+// Demonstrates inheritance, method overriding, and abstraction
+
+// Abstract Parent Class
+abstract class Member {
+    private String memberId;
+    private String name;
+    private double balance;
+
+    // Constructor
+    public Member(String memberId, String name, double balance) {
+        this.memberId = memberId;
+        this.name = name;
+        this.balance = balance;
+    }
+
+    // Abstract method (must be implemented by subclasses)
+    public abstract double calculateBenefits();
+
+    // Common method for all members
+    public void displayInfo() {
+        System.out.println("Member ID: " + memberId);
+        System.out.println("Name: " + name);
+        System.out.println("Balance: " + balance);
+    }
+}
+
+// Subclass: Regular Member
+class RegularMember extends Member {
+    public RegularMember(String memberId, String name, double balance) {
+        super(memberId, name, balance);
+    }
+
+    @Override
+    public double calculateBenefits() {
+        return balance * 0.05;
+    }
+}
+
+// Subclass: Associate Member
+class AssociateMember extends Member {
+    public AssociateMember(String memberId, String name, double balance) {
+        super(memberId, name, balance);
+    }
+
+    @Override
+    public double calculateBenefits() {
+        return balance * 0.03;
+    }
+}
+
+// Subclass: Lifetime Member
+class LifetimeMember extends Member {
+    public LifetimeMember(String memberId, String name, double balance) {
+        super(memberId, name, balance);
+    }
+
+    @Override
+    public double calculateBenefits() {
+        return balance * 0.10;
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        // Create an array of members
+        Member[] members = {
+            new RegularMember("R001", "Alice", 10000),
+            new AssociateMember("A001", "Bob", 15000),
+            new LifetimeMember("L001", "Charlie", 20000)
+        };
+
+        // Loop through each member and display details
+        for (Member m : members) {
+            m.displayInfo();  // prints ID, name, balance
+            System.out.println("Benefits: " + m.calculateBenefits()); // polymorphism
+            System.out.println("---------------------------");
+        }
+    }
+}
