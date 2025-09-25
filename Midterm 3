@@ -1,0 +1,125 @@
+// Shipping interface
+public interface Shippable {
+
+    // Abstract method to calculate shipping cost
+    double calculateShippingCost();
+
+    // Abstract method to print the shipping label
+    void printShippingLabel();
+}
+
+// Book class implementing Shippable
+public class Book implements Shippable {
+
+    // Properties
+    private double weightKg;
+    private String destinationAddress;
+
+    // Constructor
+    public Book(double weightKg, String destinationAddress) {
+        this.weightKg = weightKg;
+        this.destinationAddress = destinationAddress;
+    }
+
+    // Getters
+    public double getWeightKg() {
+        return weightKg;
+    }
+
+    public String getDestinationAddress() {
+        return destinationAddress;
+    }
+
+    // Implementing calculateShippingCost method for Book
+    @Override
+    public double calculateShippingCost() {
+        // $5.00 per kilogram, (e.g., a 2kg book costs $10.00)
+        return this.weightKg * 5.00;
+    }
+
+    // Implementing printShippingLabel method for Book
+    @Override
+    public void printShippingLabel() {
+        System.out.println("---- SHIPPING LABEL ----");
+        System.out.println("Destination: " + getDestinationAddress());
+        System.out.println("Shipping Cost: $" + calculateShippingCost());
+        System.out.println("------------------------");
+    }
+}
+
+// Electronics class implementing Shippable
+public class Electronics implements Shippable {
+
+    // Properties
+    private double weightKg;
+    private String destinationAddress;
+    private boolean containsBatteries;
+
+    // Constructor
+    public Electronics(double weightKg, String destinationAddress, boolean containsBatteries) {
+        this.weightKg = weightKg;
+        this.destinationAddress = destinationAddress;
+        this.containsBatteries = containsBatteries;
+    }
+
+    // Getters
+    public double getWeightKg() {
+        return weightKg;
+    }
+
+    public String getDestinationAddress() {
+        return destinationAddress;
+    }
+
+    public boolean getContainsBatteries() {
+        return containsBatteries;
+    }
+
+    // Implementing calculateShippingCost method for Electronics
+    @Override
+    public double calculateShippingCost() {
+        // $8.00 per kilogram plus a flat $12.00 handling fee if it contains batteries
+        double cost = this.weightKg * 8.00;
+        if (this.containsBatteries) {
+            cost += 12.00;
+        }
+        return cost;
+    }
+
+    // Implementing printShippingLabel method for Electronics
+    @Override
+    public void printShippingLabel() {
+        System.out.println("---- SHIPPING LABEL ----");
+        System.out.println("Destination: " + getDestinationAddress());
+        System.out.println("Shipping Cost: $" + calculateShippingCost());
+        System.out.println("------------------------");
+    }
+}
+
+// DeliveryService main class
+import java.util.ArrayList;
+import java.util.List;
+
+public class DeliveryService {
+
+    public static void main(String[] args) {
+        // Create a list of Shippable items
+        List<Shippable> shippableItems = new ArrayList<>();
+
+        // Create at least one Book and two Electronics items
+        Book book1 = new Book(2.5, "123 Main St, Anytown, USA");
+        Electronics electronics1 = new Electronics(1.5, "456 Oak Ave, Somewhere, USA", true);
+        Electronics electronics2 = new Electronics(3.0, "789 Pine Ln, Nowhere, USA", false);
+
+        // Add the items to the list
+        shippableItems.add(book1);
+        shippableItems.add(electronics1);
+        shippableItems.add(electronics2);
+
+        // Loop through the list and call the printShippingLabel method for each item
+        for (Shippable item : shippableItems) {
+            item.printShippingLabel();
+            System.out.println(); // Add a blank line for better readability
+        }
+    }
+}
