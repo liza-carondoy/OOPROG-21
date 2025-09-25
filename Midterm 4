@@ -1,0 +1,96 @@
+// Written by: Your Name
+// Written on: 09/25/2025
+
+// Interface for taxable items
+interface Taxable {
+    double taxRate = 0.12;
+    double calculateTax();
+}
+
+// Base class Goods
+class Goods {
+    protected String description;
+    protected double price;
+
+    public Goods(String description, double price) {
+        this.description = description;
+        this.price = price;
+    }
+
+    public void display() {
+        System.out.println("Description: " + description);
+        System.out.println("Price: " + price);
+    }
+}
+
+// Food subclass
+class Food extends Goods {
+    private int calories;
+
+    public Food(String description, double price, int calories) {
+        super(description, price);
+        this.calories = calories;
+    }
+
+    @Override
+    public void display() {
+        super.display();
+        System.out.println("Calories: " + calories);
+    }
+}
+
+// Toy subclass
+class Toy extends Goods {
+    private int minimumAge;
+
+    public Toy(String description, double price, int minimumAge) {
+        super(description, price);
+        this.minimumAge = minimumAge;
+    }
+
+    @Override
+    public void display() {
+        super.display();
+        System.out.println("Minimum Age: " + minimumAge);
+    }
+}
+
+// Books subclass implementing Taxable
+class Books extends Goods implements Taxable {
+    private String author;
+
+    public Books(String description, double price, String author) {
+        super(description, price);
+        this.author = author;
+    }
+
+    @Override
+    public double calculateTax() {
+        return price * taxRate;
+    }
+
+    @Override
+    public void display() {
+        super.display();
+        System.out.println("Author: " + author);
+        System.out.println("Tax: " + calculateTax());
+    }
+}
+
+// Demo class to run the program
+public class Demo {
+    public static void main(String[] args) {
+        Food food = new Food("Chocolate Cake", 150.0, 450);
+        Toy toy = new Toy("Action Figure", 300.0, 5);
+        Books book = new Books("Java Programming", 500.0, "John Doe");
+
+        System.out.println("=== Food ===");
+        food.display();
+
+        System.out.println("\n=== Toy ===");
+        toy.display();
+
+        System.out.println("\n=== Book ===");
+        book.display();
+    }
+}
